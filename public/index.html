@@ -1,0 +1,428 @@
+<!doctype html>
+<html>
+<head>
+<title>JotiHunt</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/backbone-min.js"></script>
+<script src="js/jotihunt.js"></script>
+<script src="js/index.js"></script>
+
+<link href="css/jotihunt.css" rel="stylesheet">
+</head>
+<body>
+
+<h1>JotiHunt</h1>
+
+<div id="deelnemers_container">
+  <h2>Deelnemers</h2>
+  <form id="deelnemers_form" action="#" onsubmit="addDeelnemer(); return false;">
+    <table>
+      <thead>
+        <tr><th>Naam</th><th>Telefoonnummer</th><th>Chauffeur</th><th><input type="submit" class="invisible" /></th></tr>
+      </thead>
+      <tbody id="deelnemers_list">
+      </tbody>
+      <tfoot id="deelnemers_new" class="hidden">
+        <tr>
+          <td><input name="naam" type="text" placeholder="Naam" /></td>
+          <td><input name="telefoonnummer" type="text" placeholder="Telefoonnummer" /></td>
+          <td><input name="chauffeur" type="checkbox" value="1" /></td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelDeelnemer(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <button id="deelnemers_add" onclick="newDeelnemer();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="activiteiten_container">
+  <h2>Activiteiten</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+        <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+        <th>21</th><th>22</th><th>23</th><th>00</th><th>01</th><th>02</th>
+        <th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th>
+        <th>09</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+      </tr>
+    </thead>
+    <tbody id="activiteiten_list">
+    </tbody>
+  </table>
+  <div id="activiteiten_edit" class="hidden">
+    <form id="activiteiten_form" action="#" onsubmit="return false;">
+      <input id="activiteiten_form_id" name="id" type="hidden" />
+      <input id="activiteiten_form_uur" name="uur" type="hidden" />
+      <input id="activiteiten_form_deelnemer" name="deelnemer" type="hidden" />
+      <select id="activiteiten_form_type" name="type" onchange="editActiviteit();">
+        <option value="">–</option>
+        <option value="H">Hunten</option>
+        <option value="P">Puzzelen</option>
+        <option value="O">Opdrachten</option>
+        <option value="S">Slapen</option>
+        <option value="A">Anders</option>
+      </select>
+      <button onclick="cancelActiviteit(); return false;"><span class="entypo-cancel"></span></button>
+    </form>
+  </div>
+</div>
+
+<div id="autoritten_container">
+  <h2>Autoritten</h2>
+  <form id="autoritten_form" action="#" onsubmit="addAutorit(); return false;">
+    <table>
+      <thead>
+        <tr><th>Chauffeur</th><th colspan="3">Bijrijders</th><th>Deelgebied</th><th>Instamapper</th><th>Weer terug?</th><th><input type="submit" class="invisible" /></th></tr>
+      </thead>
+      <tbody id="autoritten_list">
+      </tbody>
+      <tfoot id="autoritten_new" class="hidden">
+        <tr>
+          <td><select name="chauffeur" class="chauffeurselect"></select></td>
+          <td><select name="bijrijder_1" class="deelnemerselect"></select></td>
+          <td><select name="bijrijder_2" class="deelnemerselect"></select></td>
+          <td><select name="bijrijder_3" class="deelnemerselect"></select></td>
+          <td><select name="deelgebied">
+            <option value="">–</option>
+            <option value="A">Alpha</option>
+            <option value="B">Bravo</option>
+            <option value="C">Charlie</option>
+            <option value="D">Delta</option>
+            <option value="E">Echo</option>
+            <option value="F">Foxtrot</option>
+          </select></td>
+          <td><input name="instamapper" type="checkbox" value="1" /></td>
+          <td><input name="weer_terug" type="checkbox" value="1" /></td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelAutorit(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <button id="autorit_add" onclick="newAutorit();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="hints_container">
+  <h2>Hints</h2>
+  <form id="hints_form" action="#" onsubmit="addHint(); return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Hintnaam</th><th>Tijdstip</th>
+          <th>Alpha</th><th>Bravo</th><th>Charlie</th><th>Delta</th><th>Echo</th><th>Foxtrot</th>
+          <th><input type="submit" class="invisible" /></th>
+        </tr>
+      </thead>
+      <tbody id="hints_list">
+      </tbody>
+      <tfoot id="hints_new" class="hidden">
+        <tr>
+          <td><input name="hintnaam" type="text" placeholder="Hintnaam" /></td>
+          <td>
+            <input name="tijdstip_date" type="date" placeholder="jjjj-mm-dd" />
+            <input name="tijdstip_time" type="time" placeholder="uu:mm" />
+          </td>
+          <td><input name="alpha_opgelost" type="checkbox" value="1" /></td>
+          <td><input name="bravo_opgelost" type="checkbox" value="1" /></td>
+          <td><input name="charlie_opgelost" type="checkbox" value="1" /></td>
+          <td><input name="delta_opgelost" type="checkbox" value="1" /></td>
+          <td><input name="echo_opgelost" type="checkbox" value="1" /></td>
+          <td><input name="foxtrot_opgelost" type="checkbox" value="1" /></td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelHint(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <button id="hints_add" onclick="newHint();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="hunts_container">
+  <h2>Hunts</h2>
+  <form id="hunts_form" action="#" onsubmit="addHunt(); return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Vossenteam</th><th>Vossencode</th><th>Tijdstip</th><th>Locatie</th><th>Status</th><th>Punten</th><th><input type="submit" class="invisible" /></th>
+        </tr>
+      </thead>
+      <tbody id="hunts_list">
+      </tbody>
+      <tfoot id="hunts_new" class="hidden">
+        <tr>
+          <td>
+            <select name="vossenteam">
+              <option value="">–</option>
+              <option value="A">Alpha</option>
+              <option value="B">Bravo</option>
+              <option value="C">Charlie</option>
+              <option value="D">Delta</option>
+              <option value="E">Echo</option>
+              <option value="F">Foxtrot</option>
+            </select>
+          </td>
+          <td><input name="vossencode" type="text" placeholder="Vossencode" /></td>
+          <td>
+            <input name="tijdstip_date" type="date" placeholder="jjjj-mm-dd" />
+            <input name="tijdstip_time" type="time" placeholder="uu:mm" />
+          </td>
+          <td><input name="locatie" type="text" placeholder="Locatie" /></td>
+          <td>
+            <select name="status">
+              <option value="">–</option>
+              <option value="I">Ingezonden</option>
+              <option value="G">Goedgekeurd</option>
+              <option value="A">Afgekeurd</option>
+            </select>
+          </td>
+          <td>
+            <select name="punten">
+              <option value="0">0</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelHunt(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <div id="hunt_edit" class="hidden">
+    <form id="hunt_form" action="#" onsubmit="return false;">
+      <input id="hunt_form_id" name="id" type="hidden" />
+      <select id="hunt_form_status" name="status">
+        <option value="">–</option>
+        <option value="I">Ingezonden</option>
+        <option value="G">Goedgekeurd</option>
+        <option value="A">Afgekeurd</option>
+      </select>
+      <select id="hunt_form_punten" name="punten">
+        <option value="0">0</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <button onclick="editHunt(); return false;"><span class="entypo-check"></span></button>
+      <button onclick="cancelHunt(); return false;"><span class="entypo-cancel"></span></button>
+    </form>
+  </div>
+  <button id="hunts_add" onclick="newHunt();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="opdrachten_container">
+  <h2>Opdrachten</h2>
+  <form id="opdrachten_form" action="#" onsubmit="addOpdracht(); return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Coördinator</th><th>Deadline</th><th>Status</th><th>Punten</th><th><input type="submit" class="invisible" /></th>
+        </tr>
+      </thead>
+      <tbody id="opdrachten_list">
+      </tbody>
+      <tfoot id="opdrachten_new" class="hidden">
+        <tr>
+          <td>
+            <select name="coordinator" class="deelnemerselect">
+            </select>
+          </td>
+          <td>
+            <input name="deadline_date" type="date" placeholder="jjjj-mm-dd" />
+            <input name="deadline_time" type="time" placeholder="uu:mm" />
+          </td>
+          <td>
+            <select name="status">
+              <option value="">–</option>
+              <option value="B">Bezig</option>
+              <option value="I">Ingezonden</option>
+              <option value="G">Goedgekeurd</option>
+              <option value="A">Afgekeurd</option>
+            </select>
+          </td>
+          <td>
+            <select name="punten">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelOpdracht(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <div id="opdracht_edit" class="hidden">
+    <form id="opdracht_form" action="#" onsubmit="return false;">
+      <input id="opdracht_form_id" name="id" type="hidden" />
+      <select id="opdracht_form_status" name="status">
+        <option value="">–</option>
+        <option value="B">Bezig</option>
+        <option value="I">Ingezonden</option>
+        <option value="G">Goedgekeurd</option>
+        <option value="A">Afgekeurd</option>
+      </select>
+      <select id="opdracht_form_punten" name="punten">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+      <button onclick="editOpdracht(); return false;"><span class="entypo-check"></span></button>
+      <button onclick="cancelOpdracht(); return false;"><span class="entypo-cancel"></span></button>
+    </form>
+  </div>
+  <button id="opdrachten_add" onclick="newOpdracht();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="fotoopdrachten_container">
+  <h2>Foto-opdrachten</h2>
+  <form id="fotoopdrachten_form" action="#" onsubmit="addFotoOpdracht(); return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Locatie</th><th>Status</th><th>Punten</th><th><input type="submit" class="invisible" /></th>
+        </tr>
+      </thead>
+      <tbody id="fotoopdrachten_list">
+      </tbody>
+      <tfoot id="fotoopdrachten_new" class="hidden">
+        <tr>
+          <td><input name="locatie" type="text" placeholder="Locatie" /></td>
+          <td>
+            <select name="status">
+              <option value="">–</option>
+              <option value="O">Open</option>
+              <option value="P">Opgepakt</option>
+              <option value="L">Opgelost</option>
+              <option value="W">Onderweg</option>
+              <option value="I">Ingezonden</option>
+              <option value="G">Goedgekeurd</option>
+              <option value="A">Afgekeurd</option>
+            </select>
+          </td>
+          <td>
+            <select name="punten">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelFotoOpdracht(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <div id="fotoopdracht_edit" class="hidden">
+    <form id="fotoopdracht_form" action="#" onsubmit="return false;">
+      <input id="fotoopdracht_form_id" name="id" type="hidden" />
+      <select id="fotoopdracht_form_status" name="status">
+        <option value="">–</option>
+        <option value="O">Open</option>
+        <option value="P">Opgepakt</option>
+        <option value="L">Opgelost</option>
+        <option value="W">Onderweg</option>
+        <option value="I">Ingezonden</option>
+        <option value="G">Goedgekeurd</option>
+        <option value="A">Afgekeurd</option>
+      </select>
+      <select id="fotoopdracht_form_punten" name="punten">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <button onclick="editFotoOpdracht(); return false;"><span class="entypo-check"></span></button>
+      <button onclick="cancelFotoOpdracht(); return false;"><span class="entypo-cancel"></span></button>
+    </form>
+  </div>
+  <button id="fotoopdrachten_add" onclick="newFotoOpdracht();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="vossenlocaties_container">
+  <h2>Vossenlocaties</h2>
+  <form id="vossenlocaties_form" action="#" onsubmit="addVossenlocatie(); return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Coordinaat</th><th>Adres</th><th><input type="submit" class="invisible" /></th>
+        </tr>
+      </thead>
+      <tbody id="vossenlocaties_list">
+      </tbody>
+      <tfoot id="vossenlocaties_new" class="hidden">
+        <tr>
+          <td><input name="coordinaat" type="text" placeholder="52.0417576,5.6198443" /></td>
+          <td><input name="adres" type="text" placeholder="Adres" /></td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelVossenlocatie(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <button id="vossenlocaties_add" onclick="newVossenlocatie();"><span class="entypo-plus"></span></button>
+</div>
+
+<div id="tegenhunts_container">
+  <h2>Tegenhunts</h2>
+  <form id="tegenhunts_form" action="#" onsubmit="addTegenhunt(); return false;">
+    <table>
+      <thead>
+        <tr>
+          <th>Gebeurtenis</th><th>Tijdstip</th><th>Punten</th><th><input type="submit" class="invisible" /></th>
+        </tr>
+      </thead>
+      <tbody id="tegenhunts_list">
+      </tbody>
+      <tfoot id="tegenhunts_new" class="hidden">
+        <tr>
+          <td><input name="gebeurtenis" type="text" placeholder="Gebeurtenis"/></td>
+          <td>
+            <input name="tijdstip_date" type="date" placeholder="jjjj-mm-dd" />
+            <input name="tijdstip_time" type="time" placeholder="uu:mm" />
+          </td>
+          <td><input name="punten" type="text" placeholder="Punten" /></td>
+          <td>
+            <button><span class="entypo-check"></span></button>
+            <button onclick="cancelTegenhunt(); return false;"><span class="entypo-cancel"></span></button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <button id="tegenhunts_add" onclick="newTegenhunt();"><span class="entypo-plus"></span></button>
+</div>
+
+</body>
+</html>

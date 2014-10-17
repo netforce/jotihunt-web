@@ -1,0 +1,50 @@
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+
+html, body, div, h1, h2, h3, h4, h5, h6, p
+{
+  font-family: helvetica, arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* entypo */
+[class *= "entypo-"]:before
+{
+  font-family: entypo, sans-serif;
+}
+
+input[type=date]
+{
+  width: 120px;
+}
+input[type=time]
+{
+  width: 70px;
+}
+
+.hidden
+{
+  display: none;
+}
+
+.invisible
+{
+  position: absolute;
+  visibility: hidden;
+}
+
+span.action
+{
+  cursor: pointer;
+}
+
+#activiteiten_list td
+{
+  text-align: center;
+}
+
+#map_canvas
+{
+  height: 100%;
+  width: 100%;
+}
