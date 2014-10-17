@@ -374,13 +374,28 @@
     <table>
       <thead>
         <tr>
-          <th>Coordinaat</th><th>Adres</th><th><input type="submit" class="invisible" /></th>
+          <th>Vossenteam</th><th>Tijdstip</th><th>Coordinaat</th><th>Adres</th><th><input type="submit" class="invisible" /></th>
         </tr>
       </thead>
       <tbody id="vossenlocaties_list">
       </tbody>
       <tfoot id="vossenlocaties_new" class="hidden">
         <tr>
+          <td>
+            <select name="vossenteam">
+              <option value="">–</option>
+              <option value="A">Alpha</option>
+              <option value="B">Bravo</option>
+              <option value="C">Charlie</option>
+              <option value="D">Delta</option>
+              <option value="E">Echo</option>
+              <option value="F">Foxtrot</option>
+            </select>
+          </td>
+	  <td>
+	      <input name="tijdstip_date" type="date" placeholder="jjjj-mm-dd" />
+              <input name="tijdstip_time" type="time" placeholder="uu:mm" />
+	 </td>
           <td><input name="coordinaat" type="text" placeholder="52.0417576,5.6198443" /></td>
           <td><input name="adres" type="text" placeholder="Adres" /></td>
           <td>

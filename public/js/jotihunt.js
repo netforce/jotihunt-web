@@ -188,9 +188,13 @@ function initCollections(args)
   var VossenlocatieModel = Backbone.Model.extend(
     { urlRoot: '/vossenlocaties'
     , defaults:
-      { coordinaat: ''
+      { vossenteam: ''
+      , tijdstip: new Date()
+      , coordinaat: ''
       , adres: ''
       }
+    , dateFields: [ 'tijdstip' ]
+
     });
 
   var VossenlocatiesCollection = Backbone.Collection.extend(

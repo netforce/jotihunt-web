@@ -1000,7 +1000,11 @@ function refreshVossenlocaties()
         for (var i = 0; i < collection.length; ++i)
         {
           var obj = collection.at(i);
-          list.append('<tr id="hint_' + obj.get('id') + '"><td>' + obj.get('coordinaat') + '</td><td>' + obj.get('adres') + '</td>'
+          list.append('<tr id="hint_' + obj.get('id') +
+		    '"><td>' + obj.get('vossenteam') +
+		    '</td><td>' + formatDate(obj.get('tijdstip')) +
+//		    '</td><td>' + obj.get('tijdstip') + 
+		    '</td><td>' + obj.get('coordinaat') + '</td><td>' + obj.get('adres') + '</td>'
                     + '<td>'
                     +   '<button onclick="deleteVossenlocatie(' + obj.get('id') + '); return false;"><span class="entypo-trash"></span></button>'
                     + '</td></tr>');
@@ -1028,12 +1032,20 @@ function cancelVossenlocatie()
 
 function addVossenlocatie()
 {
-  var value = { coordinaat: ''
+  var value = { vossenteam: ''
+	      ,	tijdstip: null 
+              ,	coordinaat: ''
               , adres: ''
               };
   $.each($('#vossenlocaties_form').serializeArray(), function()
   {
-    if (this.name === 'coordinaat')
+    if (this.name === 'vossenteam')
+      value.vossenteam = this.value;
+    else if (this.name === 'tijdstip_date')
+      tijdstip_date = this.value;
+    else if (this.name === 'tijdstip_time')
+      value.tijdstip = new Date(tijdstip_date + "T" + this.value + "Z");
+    else if (this.name === 'coordinaat')
       value.coordinaat = this.value;
     else if (this.name === 'adres')
       value.adres = this.value;

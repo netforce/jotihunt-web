@@ -4,7 +4,6 @@ var Backbone = require('backbone-mysql');
 var MySQL = require('mysql');
 var JotiHunt = require('js/jotihunt')({ Backbone: Backbone });
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Initialization
@@ -853,6 +852,8 @@ app.get('/vossenlocaties', function(req, res)
         {
           var model = collection.at(i);
           value.push({ id: model.get('id')
+		     , vossenteam: model.get('vossenteam')
+		     , tijdstip: model.get('tijdstip')
                      , coordinaat: model.get('coordinaat')
                      , adres: model.get('adres')
                      });
@@ -874,6 +875,8 @@ app.get('/vossenlocaties/:id', function(req, res)
     { success: function (model, response, options)
       {
         var value = { id: model.get('id')
+		    , vossenteam: model.get('vossenteam')
+                    , tijdstip: model.get('tijdstip')
                     , coordinaat: model.get('coordinaat')
                     , adres: model.get('adres')
                     };
