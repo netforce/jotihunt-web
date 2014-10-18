@@ -12,9 +12,9 @@ var JotiHunt = require('js/jotihunt')({ Backbone: Backbone });
 // Initialize the MySQL backend connection
 Backbone.client = MySQL.createConnection(
   { host    : 'localhost'
-  , user    : 'jotihunt-web'
-  , password: 'xZ8NYxtVSEMryABV'
-  , database: 'jotihunt-web'
+  , user    : 'krisb'
+  , password: 'Koekje!@#'
+  , database: 'jotihunt'
   });
 
 // Initialize the application
