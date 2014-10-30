@@ -8,7 +8,6 @@ var map = null;
 function run()
 {
   refreshVossenlocaties();
-//  addDeelgebieden();
 
   var mapOptions = { center: { lat: 52.0417576, lng: 5.6198443 }
                    , zoom: 13
@@ -17,17 +16,6 @@ function run()
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 }
 $(window).load(run);
-
-////////////////////////////////////////////////////////////////////////////////
-//
-// addDeelgebieden 
-//
-
-//function addDeelgebieden()
-//{
-//  var ctaLayer = new.google.maps.KmlLayer({url: 'http://jotihunt.net/kml.php?v=2.23'});
-//  ctaLayer.setMap(map);
-//}
 
 
 ////////////////////////////////////////////////////////////////////////////////

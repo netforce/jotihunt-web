@@ -1013,7 +1013,7 @@ app.delete('/tegenhunts/:id', function(req, res)
 //
 
 // Start the application
-var server = app.listen(3030, function()
+var server = app.listen(3000, function()
 {
 	console.log("Listening on port %d", server.address().port);
 });
