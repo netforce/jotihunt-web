@@ -22,7 +22,7 @@ var app = Express();
 // Parse the request body as JSON object
 app.use(BodyParser.json());
 // Server all files within the 'public' directory as-is
-app.use(Express.static('public'));
+app.use(Express.static(__dirname + '/public'));
 
 
 ////////////////////////////////////////////////////////////////////////////////
